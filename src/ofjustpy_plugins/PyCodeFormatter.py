@@ -3,8 +3,6 @@ leverage pygments to build ofjustpy component to display formatted python code
 
 """
 import ofjustpy as oj
-from ofjustpy.SHC_types import ActiveComponents as AC
-from ofjustpy.SHC_types import PassiveComponents as PC
 from py_tailwind_utils import bg
 from py_tailwind_utils import fc
 from py_tailwind_utils import gray
@@ -25,9 +23,9 @@ class HtmlFormatter(pygHtmlFormatter):
         self,
         *args,
         twsty_tags=[],
-        span_hc_gen=PC.Span,
-        code_hc_gen=PC.Code,
-        pre_hc_gen=PC.Pre,
+        span_hc_gen=oj.PC.Span,
+        code_hc_gen=oj.PC.CodeDiv,
+        pre_hc_gen=oj.PC.PreDiv,
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
@@ -46,11 +44,12 @@ class HtmlFormatter(pygHtmlFormatter):
             style_class = style_class.strip() if style_class else ""
             style_label = STANDARD_TYPES.get(ttype, "")
             css_class = self.ttype2class.get(ttype)
-            pcp = [fc / green / 1]
+            twsty_tags = [fc / green / 1]
             if ttype in TokenStyle:
                 twsty_tags = TokenStyle[ttype]
             else:
                 print(f"{ttype} not found in TokenStyle mapping")
+                assert False
             # print ("----------------------------------------")
 
             # print(f"Type: {ttype}, \n Value: {value}, \n CSS-class: {css_class},  \n CSS-Label: {style_label}, \n Style-Class: {style_class}")
@@ -121,10 +120,13 @@ class HtmlFormatter(pygHtmlFormatter):
 
 def format_code(code, twsty_tags=[], **kwargs):
     lexer = PythonLexer()
-    oj.set_style("un")
-    formatter = HtmlFormatter(wrap_code=True, twsty_tags=twsty_tags, **kwargs)
-    tokens = lexer.get_tokens(code)
-    # everything is wrapped with pre component
-    source = [_ for _ in formatter.format(tokens, None)][0]
+    with oj.TwStyCtx("un"):
+        formatter = HtmlFormatter(wrap_code=True, twsty_tags=twsty_tags,
+                                  # code_hc_gen= oj.PC.Div,
+                                  # pre_hc_gen = oj.PC.Div,
+                                  **kwargs)
+        tokens = lexer.get_tokens(code)
+        # everything is wrapped with pre component
+        source = [_ for _ in formatter.format(tokens, None)][0]
 
     return source

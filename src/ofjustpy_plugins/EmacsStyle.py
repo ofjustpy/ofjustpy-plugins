@@ -71,9 +71,12 @@ EmacsTailwindStyle = {
     Comment: [fc / green / 7, fy.i],
     Comment.Preproc: [fy.ni],
     Comment.Special: [fy.ni, fw.bold],
+    Comment.Single: [fc/gray/6, fw.thin],
+    
     Keyword: [fw.bold, fc / purple / 6],
     Keyword.Pseudo: [fw.normal],
     Keyword.Type: [fw.bold, fc / green / 6],
+    Keyword.Namespace: [fw.bold, fc/blue/7],
     Operator: [fc / gray / 6],
     Operator.Word: [fw.bold, fc / purple / 6],
     Name: [fc / green / 7],
