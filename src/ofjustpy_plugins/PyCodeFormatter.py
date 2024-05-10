@@ -120,7 +120,7 @@ class HtmlFormatter(pygHtmlFormatter):
 
 def format_code(code, twsty_tags=[], **kwargs):
     lexer = PythonLexer()
-    with oj.TwStyCtx("un"):
+    with oj.TwStyCtx(oj.ui_styles.un):
         formatter = HtmlFormatter(wrap_code=True, twsty_tags=twsty_tags,
                                   # code_hc_gen= oj.PC.Div,
                                   # pre_hc_gen = oj.PC.Div,

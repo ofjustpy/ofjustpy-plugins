@@ -15,7 +15,7 @@ code = """
                             required=True,
                             size=30,
                             debug=True,
-                            pcp=[bg/blue/"100/50"])
+                            twsty_tags=[bg/blue/"100/50"])
                          """
 
 code = """import ofjustpy as oj
